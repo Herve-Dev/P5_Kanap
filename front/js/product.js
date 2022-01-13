@@ -61,17 +61,17 @@ const showMeproducts = async () => {
 
 }
     
-
 showMeproducts();
+
 
 function validateBasket() {  
 
     let colorSlected = document.getElementById('colors');
     let quantitySelected = parseInt(document.getElementById('quantity').value, 10)
         
-        if (colorSlected.value == 0 && quantitySelected <= 0
-             || quantitySelected <= 0 && !!colorSlected.value 
-             || quantitySelected >= 1 && !!colorSlected.value ) {
+        if (colorSlected.value.length == 0 && quantitySelected <= 0
+             || quantitySelected <= 0 && colorSlected.value.length != 0 
+             || quantitySelected >= 1 && colorSlected.value.length == 0 ) {
 
             console.log(colorSlected.value);
             alertBasket(); 
@@ -79,18 +79,18 @@ function validateBasket() {
         } else {
     
             alertValidate()
-            let colorAdd = {color : [colorSlected.value]};
+            let colorAdd = {color : colorSlected.value};
             let quantityAdd = {quantity:  quantitySelected};
-            Object.assign(productBasket, colorAdd, quantityAdd)
+            Object.assign(productBasket, colorAdd, quantityAdd) // productBasket variable globale faire attention
             checkOptionBasket(productBasket);
-            console.log(productBasket.color);
+            console.log(productBasket);
         }   
     
 }
  
 let buttonAdd = document.getElementById('addToCart');
 buttonAdd.addEventListener('click', () => {
-
+    
     validateBasket()
 })
 

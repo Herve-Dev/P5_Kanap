@@ -39,18 +39,29 @@ function checkOptionBasket(productBasket) {
     
 
 
-function addBasketInLocalSrorage(productBasket) {
+function addBasketInLocalSrorage(productBasket, colorSlected) {
+    let foundId = window.location.search.split('?').join("");
     let basketInLocalStorage = JSON.parse(localStorage.getItem("basket"));
+    let comparativeIdAndColor = basketInLocalStorage.find(b => b.id == foundId && b.color == colorSlected.value);
       
     if (basketInLocalStorage == null) {
         basketInLocalStorage = [];
-    } 
+
+    } else if (basketInLocalStorage != null && comparativeIdAndColor) {
+        let newQuantity;
+        basketInLocalStorage.forEach(product => {
+            newQuantity = product.quantity;
+        })
         
-    checkConditionProduct(basketInLocalStorage ,productBasket);
+    } 
+    basketInLocalStorage.push(productBasket);
+    localStorage.setItem("basket", JSON.stringify(basketInLocalStorage))
+    console.log(basketInLocalStorage);
+    //checkConditionProduct(basketInLocalStorage ,productBasket);
         
 }
 
-function checkConditionProduct(basketInLocalStorage ,productBasket) {
+/*function checkConditionProduct(basketInLocalStorage ,productBasket) {
 
     let foundId = window.location.search.split('?').join("");
     let checkLocalStorage = JSON.parse(localStorage.getItem("basket"))
@@ -85,7 +96,7 @@ function checkConditionProduct(basketInLocalStorage ,productBasket) {
     localStorage.setItem("basket", JSON.stringify(basketInLocalStorage))
     console.log(basketInLocalStorage);
        
-}
+}*/
 
 
 
@@ -101,7 +112,7 @@ function totalCalculation() {
         
         //arrayPriceAndQuantity.push(element.quantity * element.price)
         arrayQuantity.push(element.quantity);
-        arrayPrice.push(element.price = element.price * element.quantity)
+        arrayPrice.push(element.price)
     });
 
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
