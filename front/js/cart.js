@@ -35,7 +35,25 @@ displayBasketCart.innerHTML = contentCart;
 totalCalculation();
 
 
-let deleteProductSelected = document.querySelector('.deleteItem');
-deleteProductSelected.addEventListener('click', () => {
+let btnOrder = document.getElementById('order');
+btnOrder.addEventListener('click', (e) => {
+    e.preventDefault();
+
+
+
     
 })
+
+
+function checkInput() {
+    let firstNameInput = document.getElementById('firstName').value;
+    let lastNameInput = document.getElementById('lastName').value;
+    let adresseInput = document.getElementById('adress').value;
+    let cityInput = document.getElementById('city').value;
+    let emailInput = document.getElementById('email').value;
+
+    let nameRGEX = /^[a-zéèçà]{2,50}(-| )?([a-zéèçà]{2,50})?$/gmi;
+    let cityREGX = /^\s*[a-zA-Z]{1}[0-9a-zA-Z][0-9a-zA-Z '-.=#/]*$/gmi
+    let emailREGX = /^[a-z0-9]+@[a-z]+\.[a-z]+$/mg
+    
+}
