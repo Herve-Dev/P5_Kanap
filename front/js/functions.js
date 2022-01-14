@@ -15,6 +15,8 @@ function alertBasket() {
 function alertValidate() {
     if (document.querySelector('.alert')) {
         document.querySelector('.alert').remove();
+    } else if (document.querySelector('.msg-validate')) {
+        document.querySelector('.msg-validate').remove();
     }
     let contentSettingsValidate = document.querySelector('.item__content__settings');
     let alertsValidate = document.createElement('div');
@@ -39,26 +41,34 @@ function checkOptionBasket(productBasket) {
     
 
 
-function addBasketInLocalSrorage(productBasket, colorSlected) {
+function addBasketInLocalSrorage(productBasket) {
     let foundId = window.location.search.split('?').join("");
     let basketInLocalStorage = JSON.parse(localStorage.getItem("basket"));
-    let comparativeIdAndColor = basketInLocalStorage.find(b => b.id == foundId && b.color == colorSlected.value);
-      
+    
+    let quantityUpdate = parseInt(document.getElementById('quantity').value)
+    let colors = document.getElementById('colors').value
+
     if (basketInLocalStorage == null) {
         basketInLocalStorage = [];
-
-    } else if (basketInLocalStorage != null && comparativeIdAndColor) {
-        let newQuantity;
-        basketInLocalStorage.forEach(product => {
-            newQuantity = product.quantity;
-        })
-        
     } 
-    basketInLocalStorage.push(productBasket);
-    localStorage.setItem("basket", JSON.stringify(basketInLocalStorage))
-    console.log(basketInLocalStorage);
-    //checkConditionProduct(basketInLocalStorage ,productBasket);
         
+    let comparativeId = basketInLocalStorage.find(b => b.id == foundId && b.color == colors);
+
+    if (comparativeId) {
+
+        basketInLocalStorage.forEach(product => {
+            product.quantity = quantityUpdate
+        })
+        console.log('je suis dans mon if de comprativeId');
+        localStorage.setItem("basket", JSON.stringify(basketInLocalStorage))
+
+    } else {
+
+        console.log('je suis dans mon else de comparativeId');
+        basketInLocalStorage.push(productBasket);
+        localStorage.setItem("basket", JSON.stringify(basketInLocalStorage))
+    }
+    
 }
 
 /*function checkConditionProduct(basketInLocalStorage ,productBasket) {
@@ -106,13 +116,13 @@ function totalCalculation() {
 
     let arrayQuantity = [];
     let arrayPrice = [];
-    let arrayPriceAndQuantity = [];
+    let arrayPriceAndQuantity = []; // a vérifier (en parler a mon mentor)
 
     getLocalStorage.forEach( element => {
         
-        //arrayPriceAndQuantity.push(element.quantity * element.price)
+        arrayPriceAndQuantity.push(element.price)
         arrayQuantity.push(element.quantity);
-        arrayPrice.push(element.price)
+        arrayPrice.push(element.price * element.quantity)
     });
 
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -121,6 +131,7 @@ function totalCalculation() {
 
     let templateQuantityTotal = document.getElementById('totalQuantity');
     let templatePriceTotal = document.getElementById('totalPrice');
+
 
     templateQuantityTotal.innerHTML = `${totalQuantity}`;
     templatePriceTotal.innerHTML = `${totalPrice}`;     

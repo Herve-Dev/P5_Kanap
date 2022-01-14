@@ -83,7 +83,7 @@ function validateBasket() {
             let quantityAdd = {quantity:  quantitySelected};
             Object.assign(productBasket, colorAdd, quantityAdd) // productBasket variable globale faire attention
             checkOptionBasket(productBasket);
-            console.log(productBasket);
+            //console.log(productBasket);
         }   
     
 }
