@@ -52,9 +52,9 @@ function addBasketInLocalSrorage(productBasket) {
         basketInLocalStorage = [];
     } 
         
-    let comparativeId = basketInLocalStorage.find(b => b.id == foundId && b.color == colors);
+    let comparativeIdAndColors = basketInLocalStorage.find(b => b.id == foundId && b.color == colors);
 
-    if (comparativeId) {
+    if (comparativeIdAndColors) {
 
         basketInLocalStorage.forEach(product => {
             product.quantity = quantityUpdate

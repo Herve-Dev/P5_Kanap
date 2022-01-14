@@ -22,7 +22,7 @@ getBasket.forEach( products => {
                     <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${products.quantity}">
                 </div>
                 <div class="cart__item__content__settings__delete">
-                    <p class="deleteItem">Supprimer</p>
+                    <p class="deleteItem" >Supprimer</p>
                 </div>
             </div>
         </div>
@@ -34,3 +34,8 @@ displayBasketCart.innerHTML = contentCart;
 
 totalCalculation();
 
+
+let deleteProductSelected = document.querySelector('.deleteItem');
+deleteProductSelected.addEventListener('click', () => {
+    
+})
