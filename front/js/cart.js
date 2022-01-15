@@ -131,7 +131,7 @@ function checkInput() {
         styleErrorMsg()
     }
 
-
+    /***************************A TRAVAILLER ***********************/
     let sendOrder = async function (contact, productsId) {
         await fetch("http://localhost:3000/api/products/order", {
             method: 'POST',
