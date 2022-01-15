@@ -37,8 +37,7 @@ totalCalculation();
 
 let btnOrder = document.getElementById('order');
 btnOrder.addEventListener('click', (e) => {
-    e.preventDefault();
-
+    
 
 
     
@@ -46,14 +45,59 @@ btnOrder.addEventListener('click', (e) => {
 
 
 function checkInput() {
-    let firstNameInput = document.getElementById('firstName').value;
-    let lastNameInput = document.getElementById('lastName').value;
-    let adresseInput = document.getElementById('adress').value;
-    let cityInput = document.getElementById('city').value;
-    let emailInput = document.getElementById('email').value;
+    let firstNameInput = document.getElementById('firstName');
+    let lastNameInput = document.getElementById('lastName');
+    let adressInput = document.getElementById('address');
+    let cityInput = document.getElementById('city');
+    let emailInput = document.getElementById('email');
 
-    let nameRGEX = /^[a-zéèçà]{2,50}(-| )?([a-zéèçà]{2,50})?$/gmi;
-    let cityREGX = /^\s*[a-zA-Z]{1}[0-9a-zA-Z][0-9a-zA-Z '-.=#/]*$/gmi
-    let emailREGX = /^[a-z0-9]+@[a-z]+\.[a-z]+$/mg
+    let nameRGEX = /[a-zA-Z]+/i;
+    let adressRGEX = /[0-9]+(\s+([a-zA-Z]+\s+)+)/i;
+    let cityREGX = /[a-zA-Z]+-/i;
+    let emailREGX = /[a-zA-Z]+.@[a-zA-Z]+\.[a-zA-Z]+/i;
+  
+    let firstNameResult = nameRGEX.test(firstNameInput.value)
+    let lastNameResult = nameRGEX.test(lastNameInput.value)
+    let adressResult = adressRGEX.test(adressInput.value)
+    let cityResult = cityREGX.test(cityInput.value)
+    let emailResult = emailREGX.test(emailInput.value)
     
+    if (firstNameResult && lastNameResult && adressResult
+        && cityResult && emailResult) {
+            
+            //IMPORTANT METTRE MA REQUETTE VERS LE SERVEUR 
+            
+    } else if (firstNameResult == false) {
+
+       let firstErrorMessage = document.getElementById('firstNameErrorMsg')
+       let htmlErrorFirstName = `erreur dans votre prenom`
+       firstErrorMessage.innerHTML = htmlErrorFirstName
+
+    } else if (lastNameResult == false) {
+        
+        let lastErrorMessage = document.getElementById('lastNameErrorMsg')
+        let htmlErrorLastName = `erreur dans votre nom`
+        lastErrorMessage.innerHTML = htmlErrorLastName
+
+    } else if (adressResult == false) {
+        
+        let addressErrorMessage = document.getElementById('addressErrorMsg')
+        let htmlErrorAdress = `erreur dans l'adresse`
+        addressErrorMessage.innerHTML = htmlErrorAdress
+
+    } else if (cityResult == false) {
+        
+        let cityErrorMessage = document.getElementById('cityErrorMsg')
+        let htmlErrorCity = `erreur dans la ville`
+        cityErrorMessage.innerHTML = htmlErrorCity
+
+    } else if (emailResult == false) {
+        
+        let emailErrorMessage = document.getElementById('emailErrorMsg')
+        let htmlErrorEmail = `erreur dans votre email`
+        emailErrorMessage.innerHTML = htmlErrorEmail
+    }
+
 }
+
+checkInput();
