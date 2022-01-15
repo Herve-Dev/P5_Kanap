@@ -137,3 +137,17 @@ function totalCalculation() {
     templatePriceTotal.innerHTML = `${totalPrice}`;     
 }
 
+function styleErrorMsg() {
+
+    let parentsErrorMsg = document.querySelectorAll('.cart__order__form__question > p')
+    parentsErrorMsg.forEach(styleMsg => {
+        styleMsg.style.backgroundColor = "red"
+        styleMsg.style.textAlign = "center"
+        styleMsg.style.borderRadius = "10px"
+        styleMsg.style.marginTop = "10px"
+        styleMsg.style.fontSize = "20px"
+        styleMsg.style.fontWeight = "700"
+        styleMsg.style.color = "white"
+    })
+}
+

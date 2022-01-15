@@ -64,40 +64,91 @@ function checkInput() {
     
     if (firstNameResult && lastNameResult && adressResult
         && cityResult && emailResult) {
+
+            let contact = {
+                firstName : firstNameInput.value,
+                lastName : lastNameInput.value,
+                adress : adressInput.value,
+                city : cityInput.value,
+                email : emailInput.value,
+            }
+
+            let productsId = [];
             
-            //IMPORTANT METTRE MA REQUETTE VERS LE SERVEUR 
+            let idInLocalStorage = JSON.parse(localStorage.getItem("basket"))
+            idInLocalStorage.forEach(elem => {
+                productsId.push(elem.id)
+            })
             
+    } else if (firstNameResult == false && lastNameResult == false && adressResult == false
+                && cityResult == false && emailResult == false) {
+        
+        let formOrder = document.querySelector('.cart__order__form')
+        let disclaimerMsg = document.createElement('div')
+        disclaimerMsg.textContent = "Pensez à remplir correctement le formulaire pour passer votre commande"
+        disclaimerMsg.style.backgroundColor = "orange"
+        disclaimerMsg.style.marginTop = "35px"
+        disclaimerMsg.style.padding = "20px"
+        disclaimerMsg.style.borderRadius = "20px"
+        disclaimerMsg.style.fontSize = "20px"
+        disclaimerMsg.style.textAlign = "center"
+        disclaimerMsg.style.fontWeight = "600"
+        formOrder.appendChild(disclaimerMsg)
+        
     } else if (firstNameResult == false) {
 
        let firstErrorMessage = document.getElementById('firstNameErrorMsg')
        let htmlErrorFirstName = `erreur dans votre prenom`
        firstErrorMessage.innerHTML = htmlErrorFirstName
+       styleErrorMsg()
 
     } else if (lastNameResult == false) {
         
         let lastErrorMessage = document.getElementById('lastNameErrorMsg')
         let htmlErrorLastName = `erreur dans votre nom`
         lastErrorMessage.innerHTML = htmlErrorLastName
+        styleErrorMsg()
 
     } else if (adressResult == false) {
         
         let addressErrorMessage = document.getElementById('addressErrorMsg')
         let htmlErrorAdress = `erreur dans l'adresse`
         addressErrorMessage.innerHTML = htmlErrorAdress
+        styleErrorMsg()
 
     } else if (cityResult == false) {
         
         let cityErrorMessage = document.getElementById('cityErrorMsg')
         let htmlErrorCity = `erreur dans la ville`
         cityErrorMessage.innerHTML = htmlErrorCity
+        styleErrorMsg()
 
     } else if (emailResult == false) {
         
         let emailErrorMessage = document.getElementById('emailErrorMsg')
         let htmlErrorEmail = `erreur dans votre email`
         emailErrorMessage.innerHTML = htmlErrorEmail
+        styleErrorMsg()
     }
 
+
+    let sendOrder = async function (contact, productsId) {
+        await fetch("http://localhost:3000/api/products/order", {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({contact, productsId})
+        })
+        .then(function (res) {
+            console.log(res);
+        })
+        .catch(function (res) {
+            console.log(res);
+        })
+    }
+
+     sendOrder()
 }
 
 checkInput();
