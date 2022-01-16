@@ -38,9 +38,9 @@ totalCalculation();
 let btnOrder = document.getElementById('order');
 btnOrder.addEventListener('click', (e) => {
     e.preventDefault();
-    checkInput();
-
     
+    checkInput();
+  
 })
 
 
