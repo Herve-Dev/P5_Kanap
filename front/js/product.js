@@ -28,8 +28,7 @@ const showMeproducts = async () => {
         price : productsItem.price,
         description : productsItem.description,
     }
-    
-    
+     
 
     document.querySelector('.item__img').innerHTML = 
     `

@@ -193,6 +193,7 @@ function checkInput() {
             console.log(order);
 
             const insertOrder = async function (data) {
+                
                 let response = await fetch('http://localhost:3000/api/products/order', {
                     method : 'POST',
                     headers : {
@@ -202,11 +203,9 @@ function checkInput() {
                 })
                 let responseData = await response.json()
                 console.log(responseData);
-                //window.location.href = "confirmation.html" + responseData.orderId  
-                console.log(responseData.orderId);
-
-                //a travailler
-                
+                let productOrderId = responseData.orderId;
+                window.location.href = `confirmation.html?orderId=${productOrderId}`  
+                console.log(productOrderId);   
             }
             
             insertOrder(order)
