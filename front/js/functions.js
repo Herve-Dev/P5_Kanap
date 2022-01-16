@@ -202,8 +202,10 @@ function checkInput() {
                 })
                 let responseData = await response.json()
                 console.log(responseData);
-                window.location.href = "confirmation.html" + responseData.orderId  
+                //window.location.href = "confirmation.html" + responseData.orderId  
                 console.log(responseData.orderId);
+
+                //a travailler
                 
             }
             
