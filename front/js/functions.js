@@ -260,7 +260,4 @@ function checkInput() {
         emailErrorMessage.innerHTML = htmlErrorEmail
         styleErrorMsg()
     }
-
-    /***************************A TRAVAILLER ***********************/
-    
 }

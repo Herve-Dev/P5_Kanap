@@ -14,7 +14,7 @@ getBasket.forEach( products => {
             <div class="cart__item__content__description">
                 <h2>${products.name}</h2>
                 <p>${products.color}</p>
-                <p>${products.price} €</p>
+                <p>${products.price * products.quantity} €</p>
             </div>
             <div class="cart__item__content__settings">
                 <div class="cart__item__content__settings__quantity">
@@ -43,6 +43,19 @@ btnOrder.addEventListener('click', (e) => {
   
 })
 
+function deleteProduct() {
+    let test = document.querySelectorAll('.deleteItem')
+    test.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            let cartItem = btn.closest(".cart__item");
+            let cartId = cartItem.dataset.id;
+            let cartColor = cartItem.dataset.color;
+            console.log(cartId, cartColor);
+        })
+    })  
+}
+/************************************** A TRAVAILLER **************************************/
+deleteProduct()
 
 
 
