@@ -45,16 +45,16 @@ btnOrder.addEventListener('click', (e) => {
 })
 
 function deleteProduct(getBasket) {
-    let test = document.querySelectorAll('.deleteItem')
-    test.forEach((btn) => {
+    let targetDelete = document.querySelectorAll('.deleteItem')
+    targetDelete .forEach((btn) => {
         btn.addEventListener("click", () => {
             let cartItem = btn.closest(".cart__item");
             let cartId = cartItem.dataset.id;
             let cartColor = cartItem.dataset.color;
-            let filter = getBasket.filter(p => p.id == cartId && p.color == cartColor);
-            cartItem.remove()
-            localStorage.setItem("basket", JSON.stringify(getBasket))
-            /******** A Travailler ************/
+            let filter = getBasket.filter(p => p.id != cartId && p.color != cartColor);
+            cartItem.remove();
+            localStorage.setItem("basket", JSON.stringify(filter));
+            location.reload();
         })
     })  
 }
