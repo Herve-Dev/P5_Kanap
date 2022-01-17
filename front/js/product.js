@@ -19,36 +19,21 @@ let productBasket;
 const showMeproducts = async () => {
 
     await fetchProducts();
+     
+    const tmpProductImg = ` <img src="${productsItem.imageUrl}" alt="Photographie d'un canapé"> `;
+    document.querySelector('.item__img').innerHTML = tmpProductImg;
     
 
-    productBasket = {
-        id : productsItem._id,
-        image : productsItem.imageUrl,
-        name: productsItem.name,
-        price : productsItem.price,
-        description : productsItem.description,
-    }
-     
+    const tmpProductName = ` ${productsItem.name} `;
+    document.getElementById('title').innerHTML = tmpProductName;
+    
+    const tmpProductPrice = `${productsItem.price} `;
+    document.getElementById('price').innerHTML =  tmpProductPrice;
+    
 
-    document.querySelector('.item__img').innerHTML = 
-    `
-    <img src="${productsItem.imageUrl}" alt="Photographie d'un canapé">
-    `
-
-    document.getElementById('title').innerHTML = 
-    `
-    ${productsItem.name}
-    `
-
-    document.getElementById('price').innerHTML = 
-    `
-    ${productsItem.price}
-    `
-
-    document.getElementById('description').innerHTML = 
-    `
-    ${productsItem.description}
-    ` 
+    const tmpProductDescription = ` ${productsItem.description} `; 
+    document.getElementById('description').innerHTML = tmpProductDescription;
+    
 
     let select = document.getElementById('colors'); 
     productsItem.colors.forEach(colors => {
@@ -58,6 +43,13 @@ const showMeproducts = async () => {
         select.appendChild(options);
     });
 
+    productBasket = {
+        id : productsItem._id,
+        image : productsItem.imageUrl,
+        name: productsItem.name,
+        price : productsItem.price,
+        description : productsItem.description,
+    }
 }
     
 showMeproducts();
@@ -82,7 +74,6 @@ function validateBasket() {
             let quantityAdd = {quantity:  quantitySelected};
             Object.assign(productBasket, colorAdd, quantityAdd) // productBasket variable globale faire attention
             checkOptionBasket(productBasket);
-            //console.log(productBasket);
         }   
     
 }
