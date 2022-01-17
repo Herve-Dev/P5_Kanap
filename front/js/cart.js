@@ -1,6 +1,7 @@
 let displayBasketCart = document.getElementById('cart__items');
 let getBasket = JSON.parse(localStorage.getItem("basket"));
 
+
 let contentCart = "";
 
 getBasket.forEach( products => {
@@ -43,19 +44,22 @@ btnOrder.addEventListener('click', (e) => {
   
 })
 
-function deleteProduct() {
+function deleteProduct(getBasket) {
     let test = document.querySelectorAll('.deleteItem')
     test.forEach((btn) => {
         btn.addEventListener("click", () => {
             let cartItem = btn.closest(".cart__item");
             let cartId = cartItem.dataset.id;
             let cartColor = cartItem.dataset.color;
-            console.log(cartId, cartColor);
+            let filter = getBasket.filter(p => p.id == cartId && p.color == cartColor);
+            cartItem.remove()
+            localStorage.setItem("basket", JSON.stringify(getBasket))
+            /******** A Travailler ************/
         })
     })  
 }
-/************************************** A TRAVAILLER **************************************/
-deleteProduct()
+
+deleteProduct(getBasket)
 
 
 
