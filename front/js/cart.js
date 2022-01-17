@@ -40,13 +40,12 @@ let btnOrder = document.getElementById('order');
 btnOrder.addEventListener('click', (e) => {
     e.preventDefault();
     
-    checkInput();
-  
+    checkInput();  
 })
 
 function deleteProduct(getBasket) {
     let targetDelete = document.querySelectorAll('.deleteItem')
-    targetDelete .forEach((btn) => {
+    targetDelete.forEach((btn) => {
         btn.addEventListener("click", () => {
             let cartItem = btn.closest(".cart__item");
             let cartId = cartItem.dataset.id;
@@ -60,6 +59,20 @@ function deleteProduct(getBasket) {
 }
 
 deleteProduct(getBasket)
+
+function addQuantity() {
+    let targetQuantity = document.querySelectorAll(".itemQuantity")
+    targetQuantity.forEach((inputQuantity) => {
+        inputQuantity.addEventListener("change", () => {
+            let articleItem = inputQuantity.closest(".cart__item");
+            let articleId = articleItem.dataset.id;
+            let articleColor = articleItem.dataset.color
+            console.log(articleId, articleColor);
+        })
+    })
+}
+
+addQuantity();
 
 
 
