@@ -73,11 +73,11 @@ function validateBasket() {
              || quantitySelected >= 1 && colorSlected.value.length == 0 ) {
 
             console.log(colorSlected.value);
-            alertBasket(); 
+            alertBasketEmpty(); 
             
         } else {
     
-            alertValidate()
+            alertValidateBasket()
             let colorAdd = {color : colorSlected.value};
             let quantityAdd = {quantity:  quantitySelected};
             Object.assign(productBasket, colorAdd, quantityAdd) // productBasket variable globale faire attention

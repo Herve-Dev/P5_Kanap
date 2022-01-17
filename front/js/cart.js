@@ -1,7 +1,6 @@
 let displayBasketCart = document.getElementById('cart__items');
 let getBasket = JSON.parse(localStorage.getItem("basket"));
 
-
 let contentCart = "";
 
 getBasket.forEach( products => {
@@ -61,13 +60,19 @@ function deleteProduct(getBasket) {
 deleteProduct(getBasket)
 
 function addQuantity() {
+    let searchQuantityLocalStorage = JSON.parse(localStorage.getItem("basket"))
     let targetQuantity = document.querySelectorAll(".itemQuantity")
     targetQuantity.forEach((inputQuantity) => {
         inputQuantity.addEventListener("change", () => {
             let articleItem = inputQuantity.closest(".cart__item");
             let articleId = articleItem.dataset.id;
             let articleColor = articleItem.dataset.color
-            console.log(articleId, articleColor);
+            let find = searchQuantityLocalStorage.find(q => q.id == articleId && q.color == articleColor)
+            if (find) {
+               find.quantity = ++find.quantity
+            }
+            localStorage.setItem("basket", JSON.stringify(searchQuantityLocalStorage))
+            location.reload();
         })
     })
 }
