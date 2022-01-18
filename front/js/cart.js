@@ -69,10 +69,27 @@ function addQuantity() {
             let articleColor = articleItem.dataset.color
             let find = searchQuantityLocalStorage.find(q => q.id == articleId && q.color == articleColor)
             if (find) {
-               find.quantity = ++find.quantity
+                find.quantity = parseInt(document.querySelector('.itemQuantity').value)
+                
             }
+            
             localStorage.setItem("basket", JSON.stringify(searchQuantityLocalStorage))
-            location.reload();
+            /*let updateContentQuantity = document.querySelector(".cart__item__content__settings__quantity > p");
+            let updateTotalQuantity = document.getElementById("totalQuantity");
+            let updateTotalCalculationQuantityPrice = document.querySelector(".cart__item__content__description ");
+
+            let newContentQuantity = "";
+            let newTotalQuantity = "";
+            let newCalculationQuantityPrice = "";
+            searchQuantityLocalStorage.forEach(product => {
+                newContentQuantity = ` <p>Qté :${product.quantity} </p> `;
+                newTotalQuantity = ` ${product.quantity} `;
+                newCalculationQuantityPrice = `${product.price * product.quantity} `
+            })
+            updateTotalCalculationQuantityPrice.lastElementChild.innerHTML = newCalculationQuantityPrice
+            updateTotalQuantity.innerHTML = newTotalQuantity
+            updateContentQuantity.innerHTML = newContentQuantity*/
+            
         })
     })
 }
