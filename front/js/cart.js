@@ -19,7 +19,7 @@ getBasket.forEach( products => {
             <div class="cart__item__content__settings">
                 <div class="cart__item__content__settings__quantity">
                     <p>Qté :${products.quantity} </p>
-                    <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${products.quantity}">
+                    <input type="number" class="itemQuantity quantity-${products.id}" name="itemQuantity" min="1" max="100" value="${products.quantity}">
                 </div>
                 <div class="cart__item__content__settings__delete">
                     <p class="deleteItem" >Supprimer</p>
@@ -31,6 +31,7 @@ getBasket.forEach( products => {
 });
 
 displayBasketCart.innerHTML = contentCart;
+
 
 totalCalculation();
 
@@ -62,17 +63,20 @@ deleteProduct(getBasket)
 function addQuantity() {
     let searchQuantityLocalStorage = JSON.parse(localStorage.getItem("basket"))
     let targetQuantity = document.querySelectorAll(".itemQuantity")
+
     targetQuantity.forEach((inputQuantity) => {
         inputQuantity.addEventListener("change", () => {
             let articleItem = inputQuantity.closest(".cart__item");
             let articleId = articleItem.dataset.id;
             let articleColor = articleItem.dataset.color
             let find = searchQuantityLocalStorage.find(q => q.id == articleId && q.color == articleColor)
+            
             if (find) {
-               find.quantity = ++find.quantity
+               find.quantity = parseInt(document.querySelector(`.quantity-${articleId}`).value)
+               console.log(find);
             }
             localStorage.setItem("basket", JSON.stringify(searchQuantityLocalStorage))
-            location.reload();
+            //location.reload();
         })
     })
 }
