@@ -62,33 +62,40 @@ deleteProduct(getBasket)
 function addQuantity() {
     let searchQuantityLocalStorage = JSON.parse(localStorage.getItem("basket"))
     let targetQuantity = document.querySelectorAll(".itemQuantity")
+    
     targetQuantity.forEach((inputQuantity) => {
         inputQuantity.addEventListener("change", () => {
+
             let articleItem = inputQuantity.closest(".cart__item");
             let articleId = articleItem.dataset.id;
-            let articleColor = articleItem.dataset.color
-            let find = searchQuantityLocalStorage.find(q => q.id == articleId && q.color == articleColor)
+            let articleColor = articleItem.dataset.color;
+            let find = searchQuantityLocalStorage.find(q => q.id == articleId && q.color == articleColor);
+
             if (find) {
-                find.quantity = parseInt(document.querySelector('.itemQuantity').value)
-                
+
+                ++find.quantity 
+                localStorage.setItem("basket", JSON.stringify(searchQuantityLocalStorage))
             }
             
-            localStorage.setItem("basket", JSON.stringify(searchQuantityLocalStorage))
-            /*let updateContentQuantity = document.querySelector(".cart__item__content__settings__quantity > p");
+            let updateContentQuantity = document.querySelector(".cart__item__content__settings__quantity > p");
             let updateTotalQuantity = document.getElementById("totalQuantity");
             let updateTotalCalculationQuantityPrice = document.querySelector(".cart__item__content__description ");
 
             let newContentQuantity = "";
             let newTotalQuantity = "";
             let newCalculationQuantityPrice = "";
+
             searchQuantityLocalStorage.forEach(product => {
+
                 newContentQuantity = ` <p>Qté :${product.quantity} </p> `;
                 newTotalQuantity = ` ${product.quantity} `;
-                newCalculationQuantityPrice = `${product.price * product.quantity} `
+                newCalculationQuantityPrice = `${product.price * product.quantity} `;
+
             })
-            updateTotalCalculationQuantityPrice.lastElementChild.innerHTML = newCalculationQuantityPrice
-            updateTotalQuantity.innerHTML = newTotalQuantity
-            updateContentQuantity.innerHTML = newContentQuantity*/
+
+            updateTotalCalculationQuantityPrice.lastElementChild.innerHTML = newCalculationQuantityPrice;
+            updateTotalQuantity.innerHTML = newTotalQuantity;
+            updateContentQuantity.innerHTML = newContentQuantity;
             
         })
     })
