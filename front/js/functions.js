@@ -228,3 +228,21 @@ function checkInput() {
         styleErrorMsg()
     }
 }
+
+function updateInnerHtml(searchQuantityLocalStorage) {
+    updateTotalCalculationQuantityPrice = document.querySelector('.cart__item__content__description')
+    updateTotalQuantity = document.querySelector('.cart__item__content__settings__quantity > p')
+    updateContentQuantity = document.getElementById('totalQuantity')
+
+    searchQuantityLocalStorage.forEach(product => {
+        newContentQuantity = ` <p>Qté :${product.quantity} </p> `;
+        newTotalQuantity = ` ${product.quantity} `;
+        newCalculationQuantityPrice = `${product.price * product.quantity} `;
+    })
+              
+
+
+    updateTotalCalculationQuantityPrice.lastElementChild.innerHTML = newCalculationQuantityPrice;
+    updateTotalQuantity.innerHTML = newTotalQuantity;
+    updateContentQuantity.innerHTML = newContentQuantity;
+}
