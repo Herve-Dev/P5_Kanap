@@ -14,7 +14,7 @@ getBasket.forEach( products => {
             <div class="cart__item__content__description">
                 <h2>${products.name}</h2>
                 <p>${products.color}</p>
-                <p>${products.price * products.quantity} €</p>
+                <p id="total-price-quantity-${products.id}">${products.price * products.quantity} €</p>
             </div>
             <div class="cart__item__content__settings">
                 <div class="cart__item__content__settings__quantity">
@@ -75,11 +75,22 @@ function addQuantity() {
             if (find) {
                find.quantity = parseInt(document.querySelector(`.quantity-${articleId}`).value)
                console.log(find);
-               let updateQté = document.querySelector(`.qté-id-${articleId}`);
 
-               let newTmpQté = `<p>Qté :${find.quantity} </p>`;
+               const updateQté = document.querySelector(`.qté-id-${articleId}`);
+               const updateTotalPrice = document.getElementById(`total-price-quantity-${articleId}`);
+               const updateTotalQuantitySpan = document.getElementById('totalQuantity');
+               const updateTotalPriceSpan = document.getElementById('totalPrice');
 
-               updateQté.innerHTML = newTmpQté
+               const newTmpQté = `<p>Qté :${find.quantity} </p>`;
+               const newTmpTotalPrice = `${find.price * find.quantity} €`;
+               const newTmpTotalQuantitySpan = `${find.quantity}`;
+               const newTmpTotalPriceSpan = `${find.price * find.quantity}` //regler ce probleme important 
+               
+
+               updateQté.innerHTML = newTmpQté;
+               updateTotalPrice.innerHTML = newTmpTotalPrice;
+               updateTotalQuantitySpan.innerHTML = newTmpTotalQuantitySpan;
+               updateTotalPriceSpan.innerHTML = newTmpTotalPriceSpan
             }
             localStorage.setItem("basket", JSON.stringify(searchQuantityLocalStorage))
             //location.reload();
