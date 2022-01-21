@@ -47,7 +47,7 @@ const showMeproducts = async () => {
         id : productsItem._id,
         image : productsItem.imageUrl,
         name: productsItem.name,
-        price : productsItem.price,
+        //price : productsItem.price, // ne pas stocker prix dans le local storage
         description : productsItem.description,
     }
 }

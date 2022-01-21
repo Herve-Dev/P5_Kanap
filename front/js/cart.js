@@ -1,8 +1,22 @@
 let displayBasketCart = document.getElementById('cart__items');
 let getBasket = JSON.parse(localStorage.getItem("basket"));
 
-let contentCart = "";
+const fetchProducts = async () => {
 
+    let id;
+    getBasket.forEach(idHtml => {
+        id = idHtml.id
+    })
+
+    products = await fetch(`http://localhost:3000/api/products/${id}`).then(res => res.json())
+        .then((promise) => {
+
+            productsItem = promise;      
+
+        }).catch((err) => console.log(err));
+}
+
+let contentCart = "";
 getBasket.forEach( products => {
     contentCart += 
     `
@@ -35,6 +49,19 @@ displayBasketCart.innerHTML = contentCart;
 
 totalCalculation();
 
+const priceAPI = async () => {
+    await fetchProducts();
+
+    
+    let div = document.querySelector('.cart__item__content__description')
+    let newP = document.createElement('p')
+    let newQté = document.createTextNode(`${productsItem.price} €`)
+    div.prepend(newP)
+    div.append(newQté)
+    
+}
+
+priceAPI()
 
 let btnOrder = document.getElementById('order');
 btnOrder.addEventListener('click', (e) => {
@@ -90,7 +117,7 @@ function addQuantity() {
                updateQté.innerHTML = newTmpQté;
                updateTotalPrice.innerHTML = newTmpTotalPrice;
                updateTotalQuantitySpan.innerHTML = newTmpTotalQuantitySpan;
-               updateTotalPriceSpan.innerHTML = newTmpTotalPriceSpan
+               updateTotalPriceSpan.innerHTML = newTmpTotalPriceSpan;
             }
             localStorage.setItem("basket", JSON.stringify(searchQuantityLocalStorage))
             //location.reload();
