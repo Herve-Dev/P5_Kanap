@@ -1,12 +1,20 @@
 let displayBasketCart = document.getElementById('cart__items');
 let getBasket = JSON.parse(localStorage.getItem("basket"));
 
-const fetchProducts = async () => {
+let id ;
+getBasket.forEach(idHtml => {
+    id = idHtml.id
+    
+})
 
-    let id;
+/*const fetchProducts = async () => {
+
+    let id ;
     getBasket.forEach(idHtml => {
         id = idHtml.id
+        
     })
+    console.log(id);
 
     products = await fetch(`http://localhost:3000/api/products/${id}`).then(res => res.json())
         .then((promise) => {
@@ -14,7 +22,10 @@ const fetchProducts = async () => {
             productsItem = promise;      
 
         }).catch((err) => console.log(err));
-}
+}*/
+
+let url = `http://localhost:3000/api/products/`;
+
 
 let contentCart = "";
 getBasket.forEach( products => {
@@ -28,7 +39,7 @@ getBasket.forEach( products => {
             <div class="cart__item__content__description">
                 <h2>${products.name}</h2>
                 <p>${products.color}</p>
-                <p id="total-price-quantity-${products.id}">${products.price * products.quantity} €</p>
+                <p class="total-price-quantity-${products.id}">${products.price * products.quantity} €</p>
             </div>
             <div class="cart__item__content__settings">
                 <div class="cart__item__content__settings__quantity">
@@ -42,6 +53,19 @@ getBasket.forEach( products => {
         </div>
     </article>
     `
+    let url = `http://localhost:3000/api/products/${products.id}`;
+    fetch(url).then((response) => 
+        response.json().then((data) => {
+            console.log(data._id);
+            const targetPrice = document.querySelector(`.total-price-quantity-${products.id}`)
+            let tmpPrice = `${data.price * products.quantity} €`;
+            targetPrice.innerHTML = tmpPrice
+
+            const targetPriceSpan = document.getElementById('totalPrice');
+            let tmpPriceSpan = `${products.quantity * data.price}`;
+            targetPriceSpan.innerHTML = tmpPriceSpan; // IMPORTANT TRAVAILLER LE TOTAL DU PANIER 
+        })
+    )
 });
 
 displayBasketCart.innerHTML = contentCart;
@@ -49,7 +73,7 @@ displayBasketCart.innerHTML = contentCart;
 
 totalCalculation();
 
-const priceAPI = async () => {
+/*const priceAPI = async () => {
     await fetchProducts();
 
     
@@ -61,7 +85,9 @@ const priceAPI = async () => {
     
 }
 
-priceAPI()
+priceAPI()*/
+
+
 
 let btnOrder = document.getElementById('order');
 btnOrder.addEventListener('click', (e) => {
