@@ -1,34 +1,18 @@
 let displayBasketCart = document.getElementById('cart__items');
 let getBasket = JSON.parse(localStorage.getItem("basket"));
 
-let id ;
-getBasket.forEach(idHtml => {
-    id = idHtml.id
-    
-})
+const urlApiBase = "http://localhost:3000/api/products/"
+let articleById = []
+articleById = getBasket.map(product => product.id)
+const mapUrls = articleById.map( id => {
+    return `${urlApiBase}/${id}`;
+});
 
-/*const fetchProducts = async () => {
-
-    let id ;
-    getBasket.forEach(idHtml => {
-        id = idHtml.id
-        
-    })
-    console.log(id);
-
-    products = await fetch(`http://localhost:3000/api/products/${id}`).then(res => res.json())
-        .then((promise) => {
-
-            productsItem = promise;      
-
-        }).catch((err) => console.log(err));
-}*/
-
-let url = `http://localhost:3000/api/products/`;
-
+/*********** A FINIR  *************/
 
 let contentCart = "";
 getBasket.forEach( products => {
+
     contentCart += 
     `
     <article class="cart__item" data-id="${products.id}" data-color="${products.color}">
@@ -53,7 +37,7 @@ getBasket.forEach( products => {
         </div>
     </article>
     `
-    let url = `http://localhost:3000/api/products/${products.id}`;
+    /*let url = `http://localhost:3000/api/products/${products.id}`;
     fetch(url).then((response) => 
         response.json().then((data) => {
             console.log(data._id);
@@ -65,10 +49,12 @@ getBasket.forEach( products => {
             let tmpPriceSpan = `${products.quantity * data.price}`;
             targetPriceSpan.innerHTML = tmpPriceSpan; // IMPORTANT TRAVAILLER LE TOTAL DU PANIER 
         })
-    )
+    )*/
+    
 });
 
 displayBasketCart.innerHTML = contentCart;
+
 
 
 totalCalculation();
