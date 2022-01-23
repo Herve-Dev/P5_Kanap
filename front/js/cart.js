@@ -8,7 +8,14 @@ const mapUrls = articleById.map( id => {
     return `${urlApiBase}/${id}`;
 });
 
-/*********** A FINIR  *************/
+const fetchAll = async(mapUrls) => {
+    return await Promise.all(
+        mapUrls.map( async(urlApiBase) => {
+            const resp = await fetch(urlApiBase);
+            return resp.json()
+        })
+    )
+}
 
 let contentCart = "";
 getBasket.forEach( products => {
@@ -37,43 +44,22 @@ getBasket.forEach( products => {
         </div>
     </article>
     `
-    /*let url = `http://localhost:3000/api/products/${products.id}`;
-    fetch(url).then((response) => 
-        response.json().then((data) => {
-            console.log(data._id);
-            const targetPrice = document.querySelector(`.total-price-quantity-${products.id}`)
-            let tmpPrice = `${data.price * products.quantity} €`;
-            targetPrice.innerHTML = tmpPrice
-
-            const targetPriceSpan = document.getElementById('totalPrice');
-            let tmpPriceSpan = `${products.quantity * data.price}`;
-            targetPriceSpan.innerHTML = tmpPriceSpan; // IMPORTANT TRAVAILLER LE TOTAL DU PANIER 
-        })
-    )*/
-    
 });
-
 displayBasketCart.innerHTML = contentCart;
+
+let totalPrice = []
+fetchAll(mapUrls).then(values => {
+    values.forEach(products => {
+        const targetPrice = document.querySelector(`.total-price-quantity-${products._id}`)
+        totalPrice.push(targetPrice.value)
+        let tmpPrice = `${products.price} €`;
+        targetPrice.innerHTML = tmpPrice     
+    })
+})
 
 
 
 totalCalculation();
-
-/*const priceAPI = async () => {
-    await fetchProducts();
-
-    
-    let div = document.querySelector('.cart__item__content__description')
-    let newP = document.createElement('p')
-    let newQté = document.createTextNode(`${productsItem.price} €`)
-    div.prepend(newP)
-    div.append(newQté)
-    
-}
-
-priceAPI()*/
-
-
 
 let btnOrder = document.getElementById('order');
 btnOrder.addEventListener('click', (e) => {
@@ -102,7 +88,7 @@ deleteProduct(getBasket)
 function addQuantity() {
     let searchQuantityLocalStorage = JSON.parse(localStorage.getItem("basket"))
     let targetQuantity = document.querySelectorAll(".itemQuantity")
-    console.log(targetQuantity);
+    //console.log(targetQuantity);
 
     targetQuantity.forEach((inputQuantity) => {
         inputQuantity.addEventListener("change", () => {

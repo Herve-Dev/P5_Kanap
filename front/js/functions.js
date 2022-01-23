@@ -81,21 +81,21 @@ function addBasketInLocalSrorage(productBasket) {
 function totalCalculation() {
     const getLocalStorage = JSON.parse(localStorage.getItem("basket"));
 
-    let arrayQuantity = [];
     let arrayPrice = [];
-    let arrayPriceAndQuantity = []; // a vérifier (en parler a mon mentor)
+    let arrayQuantity = [];
+
+    
 
     getLocalStorage.forEach( element => {
-        
-        arrayPriceAndQuantity.push(element.price)
         arrayQuantity.push(element.quantity);
-        arrayPrice.push(element.price * element.quantity)
     });
+
 
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     let totalPrice = arrayPrice.reduce(reducer);
     let totalQuantity = arrayQuantity.reduce(reducer)
-
+    
+    
     let templateQuantityTotal = document.getElementById('totalQuantity');
     let templatePriceTotal = document.getElementById('totalPrice');
 

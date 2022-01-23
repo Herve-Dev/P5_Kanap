@@ -9,7 +9,6 @@ const fetchProducts = async () => {
 
             productsItem = promise;
             
-
         }).catch((err) => console.log(err));
 
 }
