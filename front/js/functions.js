@@ -81,18 +81,25 @@ function addBasketInLocalSrorage(productBasket) {
 function totalCalculation() {
     const getLocalStorage = JSON.parse(localStorage.getItem("basket"));
 
-    let arrayPrice = [];
     let arrayQuantity = [];
 
+     fetchAll(mapUrls).then(function (data) {
+         /*data.forEach( products => {
+             console.log(products)
+            
+         })*/
+         
+     })
     
-
+     
+    
     getLocalStorage.forEach( element => {
         arrayQuantity.push(element.quantity);
     });
 
 
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    let totalPrice = arrayPrice.reduce(reducer);
+  //  let totalPrice = arrayPrice.reduce(reducer);
     let totalQuantity = arrayQuantity.reduce(reducer)
     
     
@@ -101,7 +108,7 @@ function totalCalculation() {
 
 
     templateQuantityTotal.innerHTML = `${totalQuantity}`;
-    templatePriceTotal.innerHTML = `${totalPrice}`;     
+    //templatePriceTotal.innerHTML = `${totalPrice}`;     
 }
 
 function styleErrorMsg() {

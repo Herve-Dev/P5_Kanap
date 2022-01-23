@@ -47,15 +47,15 @@ getBasket.forEach( products => {
 });
 displayBasketCart.innerHTML = contentCart;
 
-let totalPrice = []
+
 fetchAll(mapUrls).then(values => {
     values.forEach(products => {
         const targetPrice = document.querySelector(`.total-price-quantity-${products._id}`)
-        totalPrice.push(targetPrice.value)
         let tmpPrice = `${products.price} €`;
         targetPrice.innerHTML = tmpPrice     
     })
 })
+
 
 
 
