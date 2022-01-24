@@ -79,7 +79,7 @@ function addBasketInLocalSrorage(productBasket) {
 }
 
 function totalCalculation() {
-    const getLocalStorage = JSON.parse(localStorage.getItem("basket"));
+    /*const getLocalStorage = JSON.parse(localStorage.getItem("basket"));
 
     let arrayQuantity = [];
 
@@ -89,26 +89,42 @@ function totalCalculation() {
             
          })*/
          
-     })
+    /* })
     
      
     
     getLocalStorage.forEach( element => {
         arrayQuantity.push(element.quantity);
-    });
+    });*/
 
 
-    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    //const reducer = (accumulator, currentValue) => accumulator + currentValue;
   //  let totalPrice = arrayPrice.reduce(reducer);
-    let totalQuantity = arrayQuantity.reduce(reducer)
+    //let totalQuantity = arrayQuantity.reduce(reducer)
     
+    let totalQuantity = 0;
+    const productsBasket = JSON.parse(localStorage.getItem("basket"));
+    const arrProductsId = products.map(product => product.id);
+    const arrayPrice = productsBasket.map(productsBasket => {
+        if (arrProductsId.includes(productsBasket.id)) {
+            totalQuantity += productsBasket.quantity
+            const productPrice = products.find(product => product._id === productsBasket.id)['price'];
+            return !!productPrice ? productsBasket.quantity * parseInt(productPrice, 10): 0;
+        }
+        return 0
+    })
+
+    const totalPrice = arrayPrice.reduce((accumulator, currentValue) => accumulator + currentValue)
+    
+
+
     
     let templateQuantityTotal = document.getElementById('totalQuantity');
     let templatePriceTotal = document.getElementById('totalPrice');
 
 
     templateQuantityTotal.innerHTML = `${totalQuantity}`;
-    //templatePriceTotal.innerHTML = `${totalPrice}`;     
+    templatePriceTotal.innerHTML = `${totalPrice}`;     
 }
 
 function styleErrorMsg() {

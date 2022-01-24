@@ -30,7 +30,7 @@ getBasket.forEach( products => {
             <div class="cart__item__content__description">
                 <h2>${products.name}</h2>
                 <p>${products.color}</p>
-                <p class="total-price-quantity-${products.id}">${products.price * products.quantity} €</p>
+                <p class="total-price-quantity-${products.id}"> €</p>
             </div>
             <div class="cart__item__content__settings">
                 <div class="cart__item__content__settings__quantity">
@@ -50,9 +50,8 @@ displayBasketCart.innerHTML = contentCart;
 
 fetchAll(mapUrls).then(values => {
     values.forEach(products => {
-        const targetPrice = document.querySelector(`.total-price-quantity-${products._id}`)
-        let tmpPrice = `${products.price} €`;
-        targetPrice.innerHTML = tmpPrice     
+        document.querySelector(`.total-price-quantity-${products._id}`).innerHTML = `${products.price} €`
+          
     })
 })
 
