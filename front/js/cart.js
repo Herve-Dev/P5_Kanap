@@ -17,9 +17,10 @@ const fetchAll = async(mapUrls) => {
     )
 }
 
+
 let contentCart = "";
 getBasket.forEach( products => {
-
+  
     contentCart += 
     `
     <article class="cart__item" data-id="${products.id}" data-color="${products.color}">

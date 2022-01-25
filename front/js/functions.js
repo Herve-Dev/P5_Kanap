@@ -79,30 +79,41 @@ function addBasketInLocalSrorage(productBasket) {
 }
 
 function totalCalculation() {
-    /*const getLocalStorage = JSON.parse(localStorage.getItem("basket"));
+    const getLocalStorage = JSON.parse(localStorage.getItem("basket"));
 
-    let arrayQuantity = [];
-
-     fetchAll(mapUrls).then(function (data) {
-         /*data.forEach( products => {
-             console.log(products)
-            
-         })*/
-         
-    /* })
     
-     
+    let arrayQuantity = []
+  
+    fetchAll(mapUrls).then(function (data) {
+        let arrayPrice = []
+        let arrayQuantityFetch = [];
+         data.forEach( products => { 
+            arrayPrice.push(products.price)    
+        }) 
+        let totalPrice = arrayPrice.reduce((accumulator, currentValue) => accumulator + currentValue);
+        let templatePriceTotal = document.getElementById('totalPrice');
+        const getLocalStorage = JSON.parse(localStorage.getItem("basket"))
+        getBasket.forEach(product => {
+            arrayQuantityFetch.push(product.quantity)
+        })
+        let totalQuantityFtech = arrayQuantityFetch.reduce((accumulator, currentValue) => accumulator + currentValue);
+        console.log(totalQuantityFtech);
+        templatePriceTotal.innerHTML = `${totalPrice}`;
+     })
     
     getLocalStorage.forEach( element => {
         arrayQuantity.push(element.quantity);
-    });*/
+    });
 
 
-    //const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    /*****************************A CORRIGER ************************/
+
+
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
   //  let totalPrice = arrayPrice.reduce(reducer);
-    //let totalQuantity = arrayQuantity.reduce(reducer)
+    let totalQuantity = arrayQuantity.reduce(reducer)
     
-    let totalQuantity = 0;
+   /* let totalQuantity = 0;
     const productsBasket = JSON.parse(localStorage.getItem("basket"));
     const arrProductsId = products.map(product => product.id);
     const arrayPrice = productsBasket.map(productsBasket => {
@@ -112,9 +123,9 @@ function totalCalculation() {
             return !!productPrice ? productsBasket.quantity * parseInt(productPrice, 10): 0;
         }
         return 0
-    })
+    })*/
 
-    const totalPrice = arrayPrice.reduce((accumulator, currentValue) => accumulator + currentValue)
+    //const totalPrice = arrayPrice.reduce((accumulator, currentValue) => accumulator + currentValue)
     
 
 
