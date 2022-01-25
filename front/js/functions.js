@@ -49,90 +49,52 @@ function checkOptionBasket(productBasket) {
 
 
 function addBasketInLocalSrorage(productBasket) {
-    let foundId = window.location.search.split('?').join("");
-    let basketInLocalStorage = JSON.parse(localStorage.getItem("basket"));
+    const foundId = window.location.search.split('?').join("");
+    const basketInLocalStorage = JSON.parse(localStorage.getItem("basket"));
     
-    let quantityUpdate = parseInt(document.getElementById('quantity').value)
-    let colors = document.getElementById('colors').value
+    const quantityUpdate = parseInt(document.getElementById('quantity').value)
+    const colors = document.getElementById('colors').value
 
-    if (basketInLocalStorage == null) {
+    if (basketInLocalStorage === null) {
         basketInLocalStorage = [];
     } 
         
-    let comparativeIdAndColors = basketInLocalStorage.find(b => b.id == foundId && b.color == colors);
+    let comparativeIdAndColors = basketInLocalStorage.find(b => b.id === foundId && b.color === colors);
 
     if (comparativeIdAndColors) {
 
         basketInLocalStorage.forEach(product => {
             product.quantity = quantityUpdate
         })
-        console.log('je suis dans mon if de comprativeId');
         localStorage.setItem("basket", JSON.stringify(basketInLocalStorage))
 
     } else {
 
-        console.log('je suis dans mon else de comparativeId');
         basketInLocalStorage.push(productBasket);
         localStorage.setItem("basket", JSON.stringify(basketInLocalStorage))
     }
     
 }
 
-function totalCalculation() {
-    const getLocalStorage = JSON.parse(localStorage.getItem("basket"));
-
+function totalCalculation(products) {
     
-    let arrayQuantity = []
-  
-    fetchAll(mapUrls).then(function (data) {
-        let arrayPrice = []
-        let arrayQuantityFetch = [];
-         data.forEach( products => { 
-            arrayPrice.push(products.price)    
-        }) 
-        let totalPrice = arrayPrice.reduce((accumulator, currentValue) => accumulator + currentValue);
-        let templatePriceTotal = document.getElementById('totalPrice');
-        const getLocalStorage = JSON.parse(localStorage.getItem("basket"))
-        getBasket.forEach(product => {
-            arrayQuantityFetch.push(product.quantity)
-        })
-        let totalQuantityFtech = arrayQuantityFetch.reduce((accumulator, currentValue) => accumulator + currentValue);
-        console.log(totalQuantityFtech);
-        templatePriceTotal.innerHTML = `${totalPrice}`;
-     })
-    
-    getLocalStorage.forEach( element => {
-        arrayQuantity.push(element.quantity);
-    });
-
-
-    /*****************************A CORRIGER ************************/
-
-
-    const reducer = (accumulator, currentValue) => accumulator + currentValue;
-  //  let totalPrice = arrayPrice.reduce(reducer);
-    let totalQuantity = arrayQuantity.reduce(reducer)
-    
-   /* let totalQuantity = 0;
+    let totalQuantity = 0;
     const productsBasket = JSON.parse(localStorage.getItem("basket"));
-    const arrProductsId = products.map(product => product.id);
+    const arrProductsId = products.map(product => product._id);
     const arrayPrice = productsBasket.map(productsBasket => {
         if (arrProductsId.includes(productsBasket.id)) {
-            totalQuantity += productsBasket.quantity
+            totalQuantity += productsBasket.quantity 
             const productPrice = products.find(product => product._id === productsBasket.id)['price'];
             return !!productPrice ? productsBasket.quantity * parseInt(productPrice, 10): 0;
         }
         return 0
-    })*/
+    })
 
-    //const totalPrice = arrayPrice.reduce((accumulator, currentValue) => accumulator + currentValue)
     
-
-
+    const totalPrice = arrayPrice.reduce((accumulator, currentValue) => accumulator + currentValue)
     
     let templateQuantityTotal = document.getElementById('totalQuantity');
     let templatePriceTotal = document.getElementById('totalPrice');
-
 
     templateQuantityTotal.innerHTML = `${totalQuantity}`;
     templatePriceTotal.innerHTML = `${totalPrice}`;     
@@ -161,7 +123,7 @@ function checkInput() {
 
     let nameRGEX = /[a-zA-Z]+/i;
     let adressRGEX = /[0-9]+(\s+([a-zA-Z]+\s+)+)/i;
-    let cityREGX = /[a-zA-Z]+-/i;
+    let cityREGX = /[a-zA-Z]+/i;
     let emailREGX = /[a-zA-Z]+.@[a-zA-Z]+\.[a-zA-Z]+/i;
   
     let firstNameResult = nameRGEX.test(firstNameInput.value)

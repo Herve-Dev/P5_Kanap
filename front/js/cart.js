@@ -17,10 +17,8 @@ const fetchAll = async(mapUrls) => {
     )
 }
 
-
 let contentCart = "";
 getBasket.forEach( products => {
-  
     contentCart += 
     `
     <article class="cart__item" data-id="${products.id}" data-color="${products.color}">
@@ -31,11 +29,11 @@ getBasket.forEach( products => {
             <div class="cart__item__content__description">
                 <h2>${products.name}</h2>
                 <p>${products.color}</p>
-                <p class="total-price-quantity-${products.id}"> €</p>
+                <p><span class="price-unit total-price-quantity-${products.id}">${products.price * products.quantity}</span> €</p>
             </div>
             <div class="cart__item__content__settings">
                 <div class="cart__item__content__settings__quantity">
-                    <p class ="qté-id-${products.id}">Qté :${products.quantity} </p>
+                    <span>Qté : </span></dpan><p class="quantity-unit qte-id-${products.id}">${products.quantity} </p>
                     <input type="number" class="itemQuantity quantity-${products.id} " name="itemQuantity" min="1" max="100" value="${products.quantity}">
                 </div>
                 <div class="cart__item__content__settings__delete">
@@ -50,32 +48,28 @@ displayBasketCart.innerHTML = contentCart;
 
 
 fetchAll(mapUrls).then(values => {
-    values.forEach(products => {
-        document.querySelector(`.total-price-quantity-${products._id}`).innerHTML = `${products.price} €`
-          
-    })
+    values.forEach(product => {
+        document.querySelector(`.total-price-quantity-${product._id}`).innerHTML = `${product.price}`;
+    });
+    totalCalculation(values);
+    addQuantity(values);
 })
 
-
-
-
-totalCalculation();
 
 let btnOrder = document.getElementById('order');
 btnOrder.addEventListener('click', (e) => {
     e.preventDefault();
-    
     checkInput();  
 })
 
 function deleteProduct(getBasket) {
-    let targetDelete = document.querySelectorAll('.deleteItem')
+    const targetDelete = document.querySelectorAll('.deleteItem')
     targetDelete.forEach((btn) => {
         btn.addEventListener("click", () => {
             let cartItem = btn.closest(".cart__item");
             let cartId = cartItem.dataset.id;
             let cartColor = cartItem.dataset.color;
-            let filter = getBasket.filter(p => p.id != cartId && p.color != cartColor);
+            let filter = getBasket.filter(p => p.id !== cartId && p.color !== cartColor);
             cartItem.remove();
             localStorage.setItem("basket", JSON.stringify(filter));
             //location.reload();
@@ -85,45 +79,53 @@ function deleteProduct(getBasket) {
 
 deleteProduct(getBasket)
 
-function addQuantity() {
-    let searchQuantityLocalStorage = JSON.parse(localStorage.getItem("basket"))
-    let targetQuantity = document.querySelectorAll(".itemQuantity")
-    //console.log(targetQuantity);
+function addQuantity(products) {
+    const searchQuantityLocalStorage = JSON.parse(localStorage.getItem("basket"))
+    const targetQuantity = document.querySelectorAll(".itemQuantity")
 
     targetQuantity.forEach((inputQuantity) => {
-        inputQuantity.addEventListener("change", () => {
-            let articleItem = inputQuantity.closest(".cart__item");
-            let articleId = articleItem.dataset.id;
-            let articleColor = articleItem.dataset.color
-            let find = searchQuantityLocalStorage.find(q => q.id == articleId && q.color == articleColor)
-            
-            if (find) {
-               find.quantity = parseInt(document.querySelector(`.quantity-${articleId}`).value)
-               console.log(find);
+        inputQuantity.addEventListener("change", (event) => {
+            event.preventDefault();
+            const articleItem = inputQuantity.closest(".cart__item");
+            const articleId = articleItem.dataset.id;
+            const articleColor = articleItem.dataset.color
+            const productSearch = searchQuantityLocalStorage.find(q => q.id === articleId && q.color === articleColor);
+            const newProduct = !!productSearch && !!products ? products.find(p => p._id === productSearch.id) : null;
 
-               const updateQté = document.querySelector(`.qté-id-${articleId}`);
-               const updateTotalPrice = document.getElementById(`total-price-quantity-${articleId}`);
-               const updateTotalQuantitySpan = document.getElementById('totalQuantity');
-               const updateTotalPriceSpan = document.getElementById('totalPrice');
+            if (!!newProduct) {
+                newProduct.quantity = parseInt(document.querySelector(`.quantity-${articleId}`).value)
+               const updateQt = document.querySelector(`.qte-id-${articleId}`);
+               const updateTotalPrice = document.querySelector(`.total-price-quantity-${articleId}`);
 
-               const newTmpQté = `<p>Qté :${find.quantity} </p>`;
-               const newTmpTotalPrice = `${find.price * find.quantity} €`;
-               const newTmpTotalQuantitySpan = `${find.quantity}`;
-               const newTmpTotalPriceSpan = `${find.price * find.quantity}` //regler ce probleme important 
+
+               const newTmpQt = `${newProduct.quantity}`;
+               const newTmpTotalPrice = `${newProduct.price * newProduct.quantity}`;
                
 
-               updateQté.innerHTML = newTmpQté;
+               updateQt.innerHTML = newTmpQt;
                updateTotalPrice.innerHTML = newTmpTotalPrice;
-               updateTotalQuantitySpan.innerHTML = newTmpTotalQuantitySpan;
-               updateTotalPriceSpan.innerHTML = newTmpTotalPriceSpan;
             }
-            localStorage.setItem("basket", JSON.stringify(searchQuantityLocalStorage))
-            //location.reload();
+            localStorage.setItem("basket", JSON.stringify(searchQuantityLocalStorage));
+            calculatePrice();
         })
     })
 }
 
-addQuantity();
+function calculatePrice() {
+    const updateTotalQuantitySpan = document.getElementById('totalQuantity');
+    const updateTotalPriceSpan = document.getElementById('totalPrice');
 
+    const allUnitQty = document.querySelectorAll(`.quantity-unit`);
+    const allPriceUnit = document.querySelectorAll(`.price-unit`);
 
-
+    let totalPrice = 0;
+    let totalQuantity = 0;
+    allUnitQty.forEach((item) => {
+       totalQuantity += parseInt(item.textContent, 10);
+    });
+    allPriceUnit.forEach( item => {
+        totalPrice += parseInt(item.textContent, 10);
+    })
+    updateTotalQuantitySpan.innerHTML = `${totalQuantity}`;
+    updateTotalPriceSpan.innerHTML = `${totalPrice}`;
+}
