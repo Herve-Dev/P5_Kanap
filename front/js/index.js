@@ -8,8 +8,6 @@ let fetchProducts = async () => {
     // On appelle notre API elle sera contenu dans notre variable products. 
     products = await fetch('http://localhost:3000/api/products').then(res => res.json())
         .catch((err) => console.log(err));
-
-    console.log(products);
 }
 
 

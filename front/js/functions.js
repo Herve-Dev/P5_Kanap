@@ -50,7 +50,7 @@ function checkOptionBasket(productBasket) {
 
 function addBasketInLocalSrorage(productBasket) {
     const foundId = window.location.search.split('?').join("");
-    const basketInLocalStorage = JSON.parse(localStorage.getItem("basket"));
+    let basketInLocalStorage = JSON.parse(localStorage.getItem("basket"));
     
     const quantityUpdate = parseInt(document.getElementById('quantity').value)
     const colors = document.getElementById('colors').value
