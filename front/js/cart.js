@@ -4,13 +4,13 @@ let getBasket = JSON.parse(localStorage.getItem("basket"));
 const urlApiBase = "http://localhost:3000/api/products/"
 let articleById = []
 articleById = getBasket.map(product => product.id)
-const mapUrls = articleById.map( id => {
+const mapUrls = articleById.map(id => {
     return `${urlApiBase}/${id}`;
 });
 
-const fetchAll = async(mapUrls) => {
+const fetchAll = async (mapUrls) => {
     return await Promise.all(
-        mapUrls.map( async(urlApiBase) => {
+        mapUrls.map(async (urlApiBase) => {
             const resp = await fetch(urlApiBase);
             return resp.json()
         })
@@ -18,9 +18,9 @@ const fetchAll = async(mapUrls) => {
 }
 
 let contentCart = "";
-getBasket.forEach( products => {
-    contentCart += 
-    `
+getBasket.forEach(products => {
+    contentCart +=
+        `
     <article class="cart__item" data-id="${products.id}" data-color="${products.color}">
         <div class="cart__item__img">
             <img src="${products.image}" alt="Photographie d'un canapé">
@@ -59,7 +59,7 @@ fetchAll(mapUrls).then(values => {
 let btnOrder = document.getElementById('order');
 btnOrder.addEventListener('click', (e) => {
     e.preventDefault();
-    checkInput();  
+    checkInput();
 })
 
 function deleteProduct(getBasket) {
@@ -74,7 +74,7 @@ function deleteProduct(getBasket) {
             localStorage.setItem("basket", JSON.stringify(filter));
             //location.reload();
         })
-    })  
+    })
 }
 
 deleteProduct(getBasket)
@@ -94,16 +94,16 @@ function addQuantity(products) {
 
             if (!!newProduct) {
                 newProduct.quantity = parseInt(document.querySelector(`.quantity-${articleId}`).value)
-               const updateQt = document.querySelector(`.qte-id-${articleId}`);
-               const updateTotalPrice = document.querySelector(`.total-price-quantity-${articleId}`);
+                const updateQt = document.querySelector(`.qte-id-${articleId}`);
+                const updateTotalPrice = document.querySelector(`.total-price-quantity-${articleId}`);
 
 
-               const newTmpQt = `${newProduct.quantity}`;
-               const newTmpTotalPrice = `${newProduct.price * newProduct.quantity}`;
-               
+                const newTmpQt = `${newProduct.quantity}`;
+                const newTmpTotalPrice = `${newProduct.price * newProduct.quantity}`;
 
-               updateQt.innerHTML = newTmpQt;
-               updateTotalPrice.innerHTML = newTmpTotalPrice;
+
+                updateQt.innerHTML = newTmpQt;
+                updateTotalPrice.innerHTML = newTmpTotalPrice;
             }
             localStorage.setItem("basket", JSON.stringify(searchQuantityLocalStorage));
             calculatePrice();
@@ -121,9 +121,9 @@ function calculatePrice() {
     let totalPrice = 0;
     let totalQuantity = 0;
     allUnitQty.forEach((item) => {
-       totalQuantity += parseInt(item.textContent, 10);
+        totalQuantity += parseInt(item.textContent, 10);
     });
-    allPriceUnit.forEach( item => {
+    allPriceUnit.forEach(item => {
         totalPrice += parseInt(item.textContent, 10);
     })
     updateTotalQuantitySpan.innerHTML = `${totalQuantity}`;
